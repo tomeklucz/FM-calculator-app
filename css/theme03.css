@@ -1,0 +1,70 @@
+:root {
+  --th03-bg-main: hsl(268, 75%, 9%);
+  --th03-bg-toggle-screen: hsl(268, 71%, 12%);
+  --th03-key-bg-violet: hsl(281, 89%, 26%);
+  --th03-key-shadow-violet: hsl(285, 91%, 52%);
+  --th03-key-bg-cyan: hsl(176, 100%, 44%);
+  --th03-key-shadow-cyan: hsl(177, 92%, 70%);
+  --th03-key-bg-magenta: hsl(268, 47%, 21%);
+  --th03-key-shadow-magenta: hsl(290, 70%, 36%);
+  --th03-text-yellow: hsl(52, 100%, 62%);
+  --th03-text-blue: hsl(198, 20%, 13%);
+  --th03-text-white: hsl(0, 0%, 100%);
+}
+
+body {
+  background-color: var(--th03-bg-main);
+}
+
+.upper-container {
+  color: var(--th03-text-yellow);
+}
+
+.theme-inputs-container {
+  background-color: var(--th03-bg-toggle-screen);
+}
+
+.theme-button:checked {
+  background-color: var(--th03-key-bg-cyan);
+}
+
+.screen-container {
+  background-color: var(--th03-bg-toggle-screen);
+  color: var(--th03-text-yellow);
+}
+
+.btns-container {
+  background-color: var(--th03-bg-toggle-screen);
+}
+
+.btn-num,
+.btn-operator {
+  color: var(--th03-text-yellow);
+  background-color: var(--th03-key-bg-magenta);
+  box-shadow: 0px 5px 0px 0px var(--th03-key-shadow-magenta);
+}
+
+.btn-blue {
+  color: var(--th03-text-white);
+  background-color: var(--th03-key-bg-violet);
+  box-shadow: 0px 5px 0px 0px var(--th03-key-shadow-violet);
+}
+
+.btn-perform {
+  color: var(--th03-text-blue);
+  background-color: var(--th03-key-bg-cyan);
+  box-shadow: 0px 5px 0px 0px var(--th03-key-shadow-cyan);
+}
+
+/* FOOTER */
+footer {
+  color: var(--th03-text-yellow);
+}
+
+footer a {
+  color: var(--th03-key-shadow-magenta);
+}
+
+footer a:hover {
+  color: var(--th03-key-shadow-violet);
+}

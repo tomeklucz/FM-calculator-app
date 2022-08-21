@@ -9,6 +9,19 @@ const performBtn = document.querySelector(".btn-perform");
 const upperScreen = document.querySelector(".upper-screen");
 const mainScreen = document.querySelector(".main-screen");
 
+const themeStylesheet = document.querySelector(".theme-stylesheet");
+const themeInputsContainer = document.querySelector(".theme-inputs-container");
+
+/* THEME CHANGER */
+const themeChanger = function () {
+  themeInputsContainer.addEventListener("click", function (e) {
+    if (!e.target.classList.contains("theme-button")) return;
+    const link = `css/theme${e.target.value}.css`;
+    themeStylesheet.setAttribute("href", link);
+  });
+};
+themeChanger();
+
 /* CALCULATOR APP */
 const calculatorApp = function () {
   let currentNumber = "";
@@ -61,7 +74,7 @@ const calculatorApp = function () {
   /* FUNCTIONS */
   const calculate = function () {
     const roundValue = 10 ** roundLevel;
-    console.log(previousNumber, currentNumber, currentOperator, result);
+    // console.log(previousNumber, currentNumber, currentOperator, result);
     if (!previousNumber || !currentNumber || !currentOperator) return;
     previousNumber = Number(previousNumber);
     currentNumber = Number(currentNumber);

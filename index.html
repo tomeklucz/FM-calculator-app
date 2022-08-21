@@ -11,7 +11,8 @@
       href="./images/favicon-32x32.png"
     />
 
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="css/style.css" />
+    <link class="theme-stylesheet" rel="stylesheet" href="css/theme01.css" />
 
     <script defer src="script.js"></script>
 
@@ -28,16 +29,35 @@
             <label for="theme02">2</label>
             <label for="theme03">3</label>
           </div>
-          <div class="theme-inputs">
-            <input type="radio" name="theme-button" id="theme01" checked />
-            <input type="radio" name="theme-button" id="theme02" />
-            <input type="radio" name="theme-button" id="theme03" />
+          <div class="theme-inputs-container">
+            <input
+              class="theme-button"
+              type="radio"
+              name="theme-button"
+              id="theme01"
+              value="01"
+              checked
+            />
+            <input
+              class="theme-button"
+              type="radio"
+              name="theme-button"
+              id="theme02"
+              value="02"
+            />
+            <input
+              class="theme-button"
+              type="radio"
+              name="theme-button"
+              id="theme03"
+              value="03"
+            />
           </div>
         </div>
       </div>
       <div class="screen-container">
-        <div class="upper-screen"></div>
-        <div class="main-screen">0</div>
+        <div class="upper-screen single-screen"></div>
+        <div class="main-screen single-screen">0</div>
       </div>
       <div class="btns-container">
         <button class="btn-num">7</button>
