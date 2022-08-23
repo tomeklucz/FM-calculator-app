@@ -39,9 +39,13 @@ const calculatorApp = function () {
         // currentNumber = "";
         result = "";
       }
-      dotBtnCheck(btn);
+
+      if (btn.innerHTML === ".") {
+        if (currentNumber.includes(".")) return;
+        if (!currentNumber) currentNumber = "0";
+      }
       if (currentNumber.length >= numberMaxLength) return;
-      if (currentNumber === "0") currentNumber = "";
+      // if (currentNumber === "0") currentNumber = "";
       currentNumber += btn.innerHTML;
       mainScreenDisplay(currentNumber);
       helperLogAll("END numberBTN CLICK");
@@ -69,7 +73,7 @@ const calculatorApp = function () {
       currentOperator = btn.innerHTML;
       if (result || result === 0) currentNumber = result;
       previousNumber = currentNumber;
-      currentNumber = "0";
+      currentNumber = "";
       mainScreenDisplay(currentNumber);
       upperScreenText = previousNumber + " " + currentOperator;
       upperScreenDisplay(upperScreenText);
@@ -138,13 +142,6 @@ const calculatorApp = function () {
 
   const resetFont = function () {
     mainScreen.classList.remove("smaller-font");
-  };
-
-  const dotBtnCheck = function (btn) {
-    if (btn.innerHTML === ".") {
-      if (currentNumber.includes(".")) return;
-      if (!currentNumber) currentNumber = "0";
-    }
   };
 
   const mainScreenDisplay = function (textToDisplay) {
