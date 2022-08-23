@@ -24,42 +24,56 @@ themeChanger();
 
 /* CALCULATOR APP */
 const calculatorApp = function () {
+  const roundLevel = 5;
+  const numberMaxLength = 15;
   let currentNumber = "";
   let previousNumber, currentOperator, upperScreenText, result;
-
-  const roundLevel = 5;
-  const numberMaxLength = 10;
 
   /* EVENT LISTENERS */
   numberBtns.forEach((btn) =>
     btn.addEventListener("click", function () {
+      helperLogAll("START numberBTN CLICK");
+      resetFont();
+      // currentOperator = "";
       if (result || result === 0) {
-        currentNumber = "";
+        // currentNumber = "";
         result = "";
       }
       dotBtnCheck(btn);
       if (currentNumber.length >= numberMaxLength) return;
+      if (currentNumber === "0") currentNumber = "";
       currentNumber += btn.innerHTML;
       mainScreenDisplay(currentNumber);
+      helperLogAll("END numberBTN CLICK");
     })
   );
 
   deleteBtn.addEventListener("click", function () {
+    helperLogAll("START deleteBTN CLICK");
     if (result || result === 0) return;
     currentNumber = currentNumber.slice(0, -1);
-    if (!currentNumber) currentNumber = "0";
+
     mainScreenDisplay(currentNumber);
+    helperLogAll("END deleteBTN CLICK");
   });
 
   operatorBtns.forEach((btn) =>
     btn.addEventListener("click", function () {
+      helperLogAll("START operatorBTN CLICK");
+      // if (
+      //   (currentNumber || currentNumber === 0) &&
+      //   (previousNumber || previousNumber === 0)
+      // )
+      calculate();
       if (!currentNumber) currentNumber = "0";
       currentOperator = btn.innerHTML;
       if (result || result === 0) currentNumber = result;
       previousNumber = currentNumber;
+      currentNumber = "0";
+      mainScreenDisplay(currentNumber);
       upperScreenText = previousNumber + " " + currentOperator;
       upperScreenDisplay(upperScreenText);
-      currentNumber = "";
+      helperLogAll("END operatorBTN CLICK");
     })
   );
 
@@ -73,9 +87,15 @@ const calculatorApp = function () {
 
   /* FUNCTIONS */
   const calculate = function () {
+    helperLogAll("START CALCULATE FUNCTION");
     const roundValue = 10 ** roundLevel;
-    // console.log(previousNumber, currentNumber, currentOperator, result);
-    if (!previousNumber || !currentNumber || !currentOperator) return;
+    if (
+      // !(previousNumber || previousNumber === 0) ||
+      // !(currentNumber || currentNumber === 0) ||
+      !currentOperator
+    )
+      return;
+    console.log("working");
     previousNumber = Number(previousNumber);
     currentNumber = Number(currentNumber);
     switch (currentOperator) {
@@ -86,16 +106,23 @@ const calculatorApp = function () {
         result = previousNumber - currentNumber;
         break;
       case "x":
+        if (currentNumber === 0 && result) return;
         result = previousNumber * currentNumber;
         break;
       case "/":
+        if (currentNumber === 0 && result) return;
         result = previousNumber / currentNumber;
         break;
     }
     result = Math.round(result * roundValue) / roundValue;
+    if (String(result).length >= numberMaxLength)
+      mainScreen.classList.add("smaller-font");
     mainScreenDisplay(result);
     upperScreenDisplay("");
     previousNumber = result;
+    currentNumber = "";
+    currentOperator = "";
+    helperLogAll("END CALCULATE FUNCTION");
   };
 
   const reset = function () {
@@ -103,9 +130,14 @@ const calculatorApp = function () {
     previousNumber = "";
     result = "";
     upperScreenText = "";
-    upperScreenDisplay("");
-    mainScreenDisplay("0");
     currentOperator = "";
+    upperScreenDisplay("");
+    mainScreenDisplay("");
+    resetFont();
+  };
+
+  const resetFont = function () {
+    mainScreen.classList.remove("smaller-font");
   };
 
   const dotBtnCheck = function (btn) {
@@ -116,11 +148,17 @@ const calculatorApp = function () {
   };
 
   const mainScreenDisplay = function (textToDisplay) {
+    if (!textToDisplay) textToDisplay = "0";
     mainScreen.innerHTML = textToDisplay;
   };
 
   const upperScreenDisplay = function (textToDisplay) {
     upperScreen.innerHTML = textToDisplay;
+  };
+
+  const helperLogAll = function (string) {
+    console.log(`---${string}---`);
+    console.log(previousNumber, currentNumber, currentOperator, result);
   };
 };
 calculatorApp();

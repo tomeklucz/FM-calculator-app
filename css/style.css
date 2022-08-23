@@ -39,7 +39,7 @@ body {
 }
 
 main {
-  padding: 20px;
+  padding: 0 20px;
   width: 355px;
 }
 
@@ -152,6 +152,10 @@ main {
 
 button:active {
   transform: translateY(5px);
+}
+
+.smaller-font {
+  font-size: calc(0.7 * var(--font-size));
 }
 
 /* FOOTER */
