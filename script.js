@@ -8,11 +8,11 @@ const resetBtn = document.querySelector(".btn-reset");
 const performBtn = document.querySelector(".btn-perform");
 const upperScreen = document.querySelector(".upper-screen");
 const mainScreen = document.querySelector(".main-screen");
-
 const themeStylesheet = document.querySelector(".theme-stylesheet");
 const themeInputsContainer = document.querySelector(".theme-inputs-container");
 
-/* THEME CHANGER */
+/* THEME CHANGER 
+   it is linking different theme css files to the index.html */
 const themeChanger = function () {
   themeInputsContainer.addEventListener("click", function (e) {
     if (!e.target.classList.contains("theme-button")) return;
@@ -27,57 +27,64 @@ const calculatorApp = function () {
   const roundLevel = 5;
   const numberMaxLength = 15;
   let currentNumber = "";
-  let previousNumber, currentOperator, upperScreenText, result;
+  let previousNumber,
+    currentOperator,
+    upperScreenText,
+    result,
+    operatorBtnLastClicked;
 
   /* EVENT LISTENERS */
   numberBtns.forEach((btn) =>
     btn.addEventListener("click", function () {
-      helperLogAll("START numberBTN CLICK");
+      operatorBtnLastClicked = false;
       resetFont();
-      // currentOperator = "";
-      if (result || result === 0) {
-        // currentNumber = "";
-        result = "";
-      }
-
+      result = "";
+      /* checking dot btn - prevent from multiple dots and writing without 0 in front */
       if (btn.innerHTML === ".") {
         if (currentNumber.includes(".")) return;
         if (!currentNumber) currentNumber = "0";
       }
+      /* checking current number max length */
       if (currentNumber.length >= numberMaxLength) return;
-      // if (currentNumber === "0") currentNumber = "";
+
       currentNumber += btn.innerHTML;
       mainScreenDisplay(currentNumber);
-      helperLogAll("END numberBTN CLICK");
     })
   );
 
   deleteBtn.addEventListener("click", function () {
-    helperLogAll("START deleteBTN CLICK");
+    operatorBtnLastClicked = false;
+    /* prevent from deleting when result is displayed */
     if (result || result === 0) return;
-    currentNumber = currentNumber.slice(0, -1);
 
+    currentNumber = currentNumber.slice(0, -1);
     mainScreenDisplay(currentNumber);
-    helperLogAll("END deleteBTN CLICK");
   });
 
   operatorBtns.forEach((btn) =>
     btn.addEventListener("click", function () {
-      helperLogAll("START operatorBTN CLICK");
-      // if (
-      //   (currentNumber || currentNumber === 0) &&
-      //   (previousNumber || previousNumber === 0)
-      // )
+      /* only changing operator */
+      if (operatorBtnLastClicked) {
+        currentOperator = btn.innerHTML;
+        upperScreenText = previousNumber + " " + currentOperator;
+        upperScreenDisplay(upperScreenText);
+        return;
+      }
+      /* without changing operator */
       calculate();
-      if (!currentNumber) currentNumber = "0";
       currentOperator = btn.innerHTML;
-      if (result || result === 0) currentNumber = result;
-      previousNumber = currentNumber;
+      /* if operator is clicked first - currentNumber = 0 */
+      if (!currentNumber) currentNumber = "0";
+      /* if there is a result - make it previousNumber */
+      result || result === 0
+        ? (previousNumber = result)
+        : (previousNumber = currentNumber);
+      /* currentNumber reset */
       currentNumber = "";
       mainScreenDisplay(currentNumber);
       upperScreenText = previousNumber + " " + currentOperator;
       upperScreenDisplay(upperScreenText);
-      helperLogAll("END operatorBTN CLICK");
+      operatorBtnLastClicked = true;
     })
   );
 
@@ -86,20 +93,15 @@ const calculatorApp = function () {
   });
 
   performBtn.addEventListener("click", function () {
+    operatorBtnLastClicked = false;
     calculate();
   });
 
   /* FUNCTIONS */
   const calculate = function () {
-    helperLogAll("START CALCULATE FUNCTION");
     const roundValue = 10 ** roundLevel;
-    if (
-      // !(previousNumber || previousNumber === 0) ||
-      // !(currentNumber || currentNumber === 0) ||
-      !currentOperator
-    )
-      return;
-    console.log("working");
+    if (!currentOperator) return;
+    /* converting to numbers */
     previousNumber = Number(previousNumber);
     currentNumber = Number(currentNumber);
     switch (currentOperator) {
@@ -110,15 +112,16 @@ const calculatorApp = function () {
         result = previousNumber - currentNumber;
         break;
       case "x":
-        if (currentNumber === 0 && result) return;
         result = previousNumber * currentNumber;
         break;
       case "/":
-        if (currentNumber === 0 && result) return;
+        /* don't divide by 0 */
+        if (currentNumber === 0) return;
         result = previousNumber / currentNumber;
         break;
     }
     result = Math.round(result * roundValue) / roundValue;
+    /* if result is a long number -> add smaller font to screen */
     if (String(result).length >= numberMaxLength)
       mainScreen.classList.add("smaller-font");
     mainScreenDisplay(result);
@@ -126,7 +129,6 @@ const calculatorApp = function () {
     previousNumber = result;
     currentNumber = "";
     currentOperator = "";
-    helperLogAll("END CALCULATE FUNCTION");
   };
 
   const reset = function () {
@@ -138,6 +140,7 @@ const calculatorApp = function () {
     upperScreenDisplay("");
     mainScreenDisplay("");
     resetFont();
+    operatorBtnLastClicked = false;
   };
 
   const resetFont = function () {
@@ -151,11 +154,6 @@ const calculatorApp = function () {
 
   const upperScreenDisplay = function (textToDisplay) {
     upperScreen.innerHTML = textToDisplay;
-  };
-
-  const helperLogAll = function (string) {
-    console.log(`---${string}---`);
-    console.log(previousNumber, currentNumber, currentOperator, result);
   };
 };
 calculatorApp();
