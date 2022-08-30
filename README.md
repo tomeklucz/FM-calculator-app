@@ -28,8 +28,8 @@ Users should be able to:
 <p align="center" width="100%"> 
 <img src="/screenshots/Screenshot-1-mobile-th01.jpg" alt="" width="50%"/>
 <img src="/screenshots/Screenshot-1-mobile-th02.jpg" alt="" width="50%"/>
-<img src="/screenshots/Screenshot-2-desktop-th03.PNG" alt=""/>
 </p>
+<img src="/screenshots/Screenshot-2-desktop-th03.PNG" alt=""/>
 
 ### Links
 
