@@ -41,6 +41,7 @@ const calculatorApp = function () {
       result = "";
       /* checking dot btn - prevent from multiple dots and writing without 0 in front */
       if (btn.innerHTML === ".") {
+         // przeniósłbym '.' do osobnej zmiennej, numberBtns sugeruje że to numery, a '.' numerem nie jest :) i logika do '.' byłaby w osobnym miejscu, co jest plusem
         if (currentNumber.includes(".")) return;
         if (!currentNumber) currentNumber = "0";
       }
@@ -67,6 +68,7 @@ const calculatorApp = function () {
       if (operatorBtnLastClicked) {
         currentOperator = btn.innerHTML;
         upperScreenText = previousNumber + " " + currentOperator;
+         // stosuj template strings
         upperScreenDisplay(upperScreenText);
         return;
       }
@@ -83,6 +85,7 @@ const calculatorApp = function () {
       currentNumber = "";
       mainScreenDisplay(currentNumber);
       upperScreenText = previousNumber + " " + currentOperator;
+     // template strings + powtarza się to dwa razy, więc można wyodrębnić do osobnej metody
       upperScreenDisplay(upperScreenText);
       operatorBtnLastClicked = true;
     })
